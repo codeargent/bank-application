@@ -1,0 +1,14 @@
+services:
+  postgres:
+    image: postgres
+    container_name: bank-application-postgres
+    environment:
+      POSTGRES_PASSWORD: secretpassword
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  postgres-data:

@@ -5,7 +5,7 @@ import { AccessTokenPayloadDto } from './dto/common/access-token-payload.dto';
 
 @Injectable()
 export class AuthService {
-  constructor(private jwtService: JwtService) {}
+  constructor(private _jwtService: JwtService) {}
 
   validateUser({ email, password }: AuthPayloadDto) {
     // Replace this with database call to find the user
@@ -17,6 +17,6 @@ export class AuthService {
       id: findUser.id,
       email: findUser.email,
     };
-    return this.jwtService.sign(payload);
+    return this._jwtService.sign(payload);
   }
 }

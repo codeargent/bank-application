@@ -5,13 +5,12 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
-  constructor(private authService: AuthService) {
+  constructor(private _authService: AuthService) {
     super();
   }
 
   validate(email: string, password: string) {
-    console.log('Inside LocalStrategy');
-    const token = this.authService.validateUser({ email, password });
+    const token = this._authService.validateUser({ email, password });
     if (!token) throw new UnauthorizedException();
     return token;
   }

@@ -1,0 +1,37 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Account {
+  userId: Int!
+  accountNumber: String!
+  balance: Int!
+}
+
+type User {
+  id: Int!
+  email: String!
+  password: String!
+  account: Account
+}
+
+type Query {
+  getUserById(id: Int!): User
+  getUsers: [User!]!
+  getAccountById(id: Int!): Account
+  getAccount: [Account!]!
+}
+
+type Mutation {
+  createUser(createUserData: CreateUserInput!): User!
+  createAccount(createAccountData: CreateAccountInput!): Account!
+}
+
+input CreateUserInput {
+  email: String!
+  password: String!
+}
+
+input CreateAccountInput {
+  userId: Int!
+}
