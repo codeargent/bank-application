@@ -4,7 +4,8 @@ import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AccountsModule } from './accounts/accounts.module';
-import { Account } from './accounts/aggregate/account.aggregate';
+import { Account } from './accounts/entity/account.entity';
+import { AuthModule } from './auth/auth.module';
 import { validationSchema } from './config/validation';
 import { User } from './users/aggregate/user.aggregate';
 import { UsersModule } from './users/users.module';
@@ -28,8 +29,8 @@ import { UsersModule } from './users/users.module';
       database: process.env.DB_NAME || 'postgres',
       entities: [User, Account],
       synchronize: process.env.NODE_ENV !== 'prod',
-      logging: process.env.NODE_ENV !== 'prod',
     }),
+    AuthModule,
     UsersModule,
     AccountsModule,
   ],

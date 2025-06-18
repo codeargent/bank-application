@@ -1,5 +1,5 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
-import { Account } from 'src/accounts/aggregate/account.aggregate';
+import { Account } from 'src/accounts/entity/account.entity';
 import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'users' })
@@ -9,7 +9,7 @@ export class User {
   @Field(() => Int)
   id: number;
 
-  @Column()
+  @Column({ unique: true })
   @Field()
   email: string;
 

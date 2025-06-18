@@ -15,23 +15,26 @@ type User {
   account: Account
 }
 
+type GetBalanceOutput {
+  balance: Int!
+}
+
+type AuthTokenDto {
+  access_token: String!
+}
+
 type Query {
-  getUserById(id: Int!): User
-  getUsers: [User!]!
-  getAccountById(id: Int!): Account
-  getAccount: [Account!]!
+  getMe: User!
+  getBalance: GetBalanceOutput!
 }
 
 type Mutation {
-  createUser(createUserData: CreateUserInput!): User!
-  createAccount(createAccountData: CreateAccountInput!): Account!
+  login(email: String!, password: String!): AuthTokenDto!
+  register(createUserData: CreateUserInput!): User!
+  createAccount: Account!
 }
 
 input CreateUserInput {
   email: String!
   password: String!
-}
-
-input CreateAccountInput {
-  userId: Int!
 }

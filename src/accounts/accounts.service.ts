@@ -2,8 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/users/aggregate/user.aggregate';
 import { Repository } from 'typeorm';
-import { Account } from './aggregate/account.aggregate';
-import { CreateAccountInput } from './mutations/create-account.input';
+import { Account } from './entity/account.entity';
 
 @Injectable()
 export class AccountsService {
@@ -20,16 +19,20 @@ export class AccountsService {
     return this._accountRepository.find();
   }
 
-  async createAccount(createAccountData: CreateAccountInput): Promise<Account> {
-    const user = await this._usersRepository.findOneBy({ id: createAccountData.userId });
+  async createAccount(userId: number): Promise<Account> {
+    const user = await this._usersRepository.findOneBy({ id: userId });
 
     if (!user) {
-      throw new BadRequestException(`User with ID ${createAccountData.userId} does not exist.`);
+      throw new BadRequestException(`User with ID ${userId} does not exist.`);
+    }
+
+    if (user.account) {
+      throw new BadRequestException(`User with ID ${userId} already has an account.`);
     }
 
     const accountNumber = await this.generateUniqueAccountNumber();
 
-    const newAccount = this._accountRepository.create({ userId: createAccountData.userId, accountNumber });
+    const newAccount = this._accountRepository.create({ userId, accountNumber });
     const savedAccount = await this._accountRepository.save(newAccount);
 
     user.account = savedAccount;

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
-import { AccessTokenPayloadDto } from '../dto/common/access-token-payload.dto';
+import { AccessTokenPayloadDto } from 'src/auth/dto/common/access-token-payload.dto';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -14,8 +14,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   validate(payload: AccessTokenPayloadDto) {
-    console.log('Inside JWT Strategy Validate');
-    console.log(payload);
     return payload;
   }
 }
