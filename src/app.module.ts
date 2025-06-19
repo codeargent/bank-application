@@ -9,6 +9,8 @@ import { AuthModule } from './auth/auth.module';
 import { validationSchema } from './config/validation';
 import { User } from './users/aggregate/user.aggregate';
 import { UsersModule } from './users/users.module';
+import { TransactionsModule } from './transactions/transactions.module';
+import { Transaction } from './transactions/entity/transaction.entity';
 
 @Module({
   imports: [
@@ -19,6 +21,26 @@ import { UsersModule } from './users/users.module';
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: 'src/schema.gql',
+      formatError: error => {
+        console.dir(error.extensions?.originalError, { depth: undefined });
+        let message = error.message;
+
+        if (error.extensions && error.extensions.originalError) {
+          const originalError = error.extensions.originalError;
+
+          if ('string' === typeof originalError) {
+            message = originalError;
+          } else if ('object' === typeof originalError && 'message' in originalError) {
+            if (Array.isArray(originalError.message)) {
+              message = originalError.message.join(', ');
+            } else if ('string' === typeof originalError.message) {
+              message = originalError.message;
+            }
+          }
+        }
+
+        return { message };
+      },
     }),
     TypeOrmModule.forRoot({
       type: 'postgres',
@@ -27,12 +49,13 @@ import { UsersModule } from './users/users.module';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME || 'postgres',
-      entities: [User, Account],
+      entities: [User, Account, Transaction],
       synchronize: process.env.NODE_ENV !== 'prod',
     }),
     AuthModule,
     UsersModule,
     AccountsModule,
+    TransactionsModule,
   ],
   controllers: [],
   providers: [],

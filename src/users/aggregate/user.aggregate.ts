@@ -17,8 +17,8 @@ export class User {
   @Field()
   password: string;
 
-  @OneToOne(() => Account)
+  @OneToOne(() => Account, account => account.user)
   @JoinColumn()
-  @Field({ nullable: true })
+  @Field(() => Account, { nullable: true })
   account?: Account;
 }

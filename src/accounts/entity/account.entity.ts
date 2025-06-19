@@ -1,14 +1,24 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { User } from 'src/users/aggregate/user.aggregate';
+import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'accounts' })
 @ObjectType()
 export class Account {
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn()
+  @Field(() => Int)
+  id: number;
+
+  @OneToOne(() => User, user => user.account, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'userId' })
+  @Field(() => User)
+  user: User;
+
+  @Column({ unique: true })
   @Field(() => Int)
   userId: number;
 
-  @Column()
+  @Column({ unique: true })
   @Field(() => String)
   accountNumber: string;
 

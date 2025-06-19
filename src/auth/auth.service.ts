@@ -28,7 +28,7 @@ export class AuthService {
     const payload: AccessTokenPayloadDto = {
       id: user.id,
       email: user.email,
-      accountNumber: user.account ? user.account.accountNumber : '',
+      accountNumber: user.account?.accountNumber!,
     };
 
     return {

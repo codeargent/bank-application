@@ -3,6 +3,8 @@
 # ------------------------------------------------------
 
 type Account {
+  id: Int!
+  user: User!
   userId: Int!
   accountNumber: String!
   balance: Int!
@@ -15,6 +17,18 @@ type User {
   account: Account
 }
 
+type AccountOutput {
+  id: Int!
+  accountNumber: String!
+  balance: Int!
+}
+
+type UserOutput {
+  id: Int!
+  email: String!
+  account: AccountOutput
+}
+
 type GetBalanceOutput {
   balance: Int!
 }
@@ -23,18 +37,35 @@ type AuthTokenDto {
   access_token: String!
 }
 
+type TransactionOutput {
+  id: Int!
+  accountNumber: String!
+  amount: Int!
+  type: String!
+  balance: Int!
+  createdAt: String!
+}
+
 type Query {
-  getMe: User!
+  getMe: UserOutput
   getBalance: GetBalanceOutput!
+  getTransactions(filters: GetTransactionsInput): [TransactionOutput!]!
+}
+
+input GetTransactionsInput {
+  type: TransactionType = null
+  page: Int! = 1
+  limit: Int! = 10
+}
+
+enum TransactionType {
+  DEPOSIT
+  WITHDRAW
 }
 
 type Mutation {
+  register(email: String!, password: String!): UserOutput!
   login(email: String!, password: String!): AuthTokenDto!
-  register(createUserData: CreateUserInput!): User!
-  createAccount: Account!
-}
-
-input CreateUserInput {
-  email: String!
-  password: String!
+  deposit(amount: Int!): TransactionOutput!
+  withdraw(amount: Int!): TransactionOutput!
 }

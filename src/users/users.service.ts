@@ -1,17 +1,18 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { ConflictException, forwardRef, Inject, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
 import { AccountsService } from 'src/accounts/accounts.service';
 import { Repository } from 'typeorm';
 import { User } from './aggregate/user.aggregate';
-import { CreateUserInput } from './dto/create-user/create-user.input';
+import { UserOutput } from './dto/common/user.output';
+import { toUserOutput } from './mappers/user.mapper';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User) private _usersRepository: Repository<User>,
-    @Inject() private readonly _accountsService: AccountsService,
+    @Inject(forwardRef(() => AccountsService)) private readonly _accountsService: AccountsService,
     private readonly _jwtService: JwtService,
   ) {}
 
@@ -35,14 +36,23 @@ export class UsersService {
       .getOne();
   }
 
-  async createUser(createUserData: CreateUserInput): Promise<User> {
-    const hashedPassword = await bcrypt.hash(createUserData.password, 10);
-    const newUser = this._usersRepository.create({ email: createUserData.email, password: hashedPassword });
+  async createUser(email: string, password: string): Promise<UserOutput> {
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const existingUser = await this.getUserByEmail(email);
+    if (existingUser) {
+      throw new ConflictException('User with this email already exists');
+    }
+
+    const newUser = this._usersRepository.create({ email: email, password: hashedPassword });
     const savedUser = await this._usersRepository.save(newUser);
 
-    await this._accountsService.createAccount(savedUser.id);
+    const createdAccount = await this._accountsService.createAccount(savedUser.id);
 
-    return savedUser;
+    savedUser.account = createdAccount;
+    await this._usersRepository.save(savedUser);
+
+    return toUserOutput(savedUser);
   }
 
   async login(user: User) {

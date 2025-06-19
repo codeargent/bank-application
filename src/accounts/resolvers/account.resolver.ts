@@ -1,5 +1,5 @@
 import { NotFoundException, UseGuards } from '@nestjs/common';
-import { Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Query, Resolver } from '@nestjs/graphql';
 import { Account } from 'src/accounts/entity/account.entity';
 import { AccessTokenPayloadDto } from 'src/auth/dto/common/access-token-payload.dto';
 import { CurrentUser } from 'src/auth/infrastructure/decorators/current-user.decorator';
@@ -21,11 +21,5 @@ export class AccountResolver {
     }
 
     return { balance: account.balance };
-  }
-
-  @UseGuards(GqlAuthGuard)
-  @Mutation(() => Account)
-  async createAccount(@CurrentUser() user: AccessTokenPayloadDto) {
-    return await this._accountsService.createAccount(user.id);
   }
 }
