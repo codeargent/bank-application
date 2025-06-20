@@ -1,6 +1,6 @@
 import { Field, InputType, Int } from '@nestjs/graphql';
 import { IsIn, IsInt, IsOptional, Min } from 'class-validator';
-import { TransactionType } from 'src/transactions/enums/transaction-type.enum';
+import { TransactionType } from '../../enums/transaction-type.enum';
 
 @InputType()
 export class GetTransactionsInput {

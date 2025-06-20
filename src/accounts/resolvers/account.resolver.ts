@@ -1,9 +1,9 @@
 import { NotFoundException, UseGuards } from '@nestjs/common';
 import { Query, Resolver } from '@nestjs/graphql';
-import { Account } from 'src/accounts/entity/account.entity';
-import { AccessTokenPayloadDto } from 'src/auth/dto/common/access-token-payload.dto';
-import { CurrentUser } from 'src/auth/infrastructure/decorators/current-user.decorator';
-import { GqlAuthGuard } from 'src/auth/infrastructure/guards/gql-auth.guard';
+import { Account } from '../entity/account.entity';
+import { AccessTokenPayloadDto } from '../../auth/dto/common/access-token-payload.dto';
+import { CurrentUser } from '../../auth/infrastructure/decorators/current-user.decorator';
+import { GqlAuthGuard } from '../../auth/infrastructure/guards/gql-auth.guard';
 import { AccountsService } from '../accounts.service';
 import { GetBalanceOutput } from '../dto/get-balance/get-balance.output';
 

@@ -7,7 +7,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AccountsModule } from './accounts/accounts.module';
 import { Account } from './accounts/entity/account.entity';
 import { AuthModule } from './auth/auth.module';
-import { validationSchema } from './config/validation';
+import { validationSchema } from './infrastructure/config/validation';
 import { Transaction } from './transactions/entity/transaction.entity';
 import { TransactionsModule } from './transactions/transactions.module';
 import { User } from './users/aggregate/user.aggregate';

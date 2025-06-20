@@ -5,7 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Transaction } from './entity/transaction.entity';
 import { TransactionResolver } from './resolvers/transaction.resolver';
 import { TransactionsService } from './transactions.service';
-import { Account } from 'src/accounts/entity/account.entity';
+import { Account } from '../accounts/entity/account.entity';
 
 @Module({
   imports: [

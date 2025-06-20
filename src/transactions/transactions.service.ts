@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Account } from 'src/accounts/entity/account.entity';
+import { Account } from '../accounts/entity/account.entity';
 import { Repository } from 'typeorm';
 import { Transaction } from './entity/transaction.entity';
 import { TransactionOutput } from './dto/common/transaction.output';

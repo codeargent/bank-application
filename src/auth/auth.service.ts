@@ -1,13 +1,13 @@
 import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-import { User } from 'src/users/aggregate/user.aggregate';
-import { UsersService } from 'src/users/users.service';
+import { User } from '../users/aggregate/user.aggregate';
+import { UsersService } from '../users/users.service';
 import { AccessTokenPayloadDto } from './dto/common/access-token-payload.dto';
 import { AuthPayloadDto } from './dto/common/auth-payload.dto';
 import { AuthTokenDto } from './dto/login/auth-token.output';
 import { MailerService } from '@nestjs-modules/mailer';
-import { CacheService } from 'src/config/cache.service';
+import { CacheService } from '../infrastructure/cache/cache.service';
 
 @Injectable()
 export class AuthService {

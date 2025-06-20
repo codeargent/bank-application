@@ -2,7 +2,7 @@ import { ConflictException, forwardRef, Inject, Injectable } from '@nestjs/commo
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
-import { AccountsService } from 'src/accounts/accounts.service';
+import { AccountsService } from '../accounts/accounts.service';
 import { Repository } from 'typeorm';
 import { User } from './aggregate/user.aggregate';
 import { UserOutput } from './dto/common/user.output';

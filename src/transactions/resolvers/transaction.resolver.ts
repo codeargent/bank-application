@@ -1,11 +1,11 @@
 import { BadRequestException, UseGuards } from '@nestjs/common';
 import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { AccessTokenPayloadDto } from 'src/auth/dto/common/access-token-payload.dto';
-import { CurrentUser } from 'src/auth/infrastructure/decorators/current-user.decorator';
-import { GqlAuthGuard } from 'src/auth/infrastructure/guards/gql-auth.guard';
-import { Transaction } from 'src/transactions/entity/transaction.entity';
+import { AccessTokenPayloadDto } from '../../auth/dto/common/access-token-payload.dto';
+import { CurrentUser } from '../../auth/infrastructure/decorators/current-user.decorator';
+import { GqlAuthGuard } from '../../auth/infrastructure/guards/gql-auth.guard';
 import { TransactionOutput } from '../dto/common/transaction.output';
 import { GetTransactionsInput } from '../dto/get-transactions/get-transactions.input';
+import { Transaction } from '../entity/transaction.entity';
 import { TransactionsService } from '../transactions.service';
 
 @Resolver(() => Transaction)

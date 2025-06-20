@@ -1,5 +1,5 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
-import { User } from 'src/users/aggregate/user.aggregate';
+import { User } from '../../users/aggregate/user.aggregate';
 import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'accounts' })

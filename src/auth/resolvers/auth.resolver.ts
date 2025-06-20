@@ -1,7 +1,7 @@
 import { BadRequestException } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { UserOutput } from 'src/users/dto/common/user.output';
-import { UsersService } from 'src/users/users.service';
+import { UserOutput } from '../../users/dto/common/user.output';
+import { UsersService } from '../../users/users.service';
 import { AuthService } from '../auth.service';
 import { AuthTokenDto } from '../dto/login/auth-token.output';
 import { ForgotPasswordOutput } from '../dto/forgot-password/forgot-password.output';

@@ -1,5 +1,5 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
-import { AccountOutput } from 'src/accounts/dto/common/account.output';
+import { AccountOutput } from '../../../accounts/dto/common/account.output';
 
 @ObjectType()
 export class UserOutput {

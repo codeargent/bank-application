@@ -1,8 +1,8 @@
 import { UseGuards } from '@nestjs/common';
 import { Query, Resolver } from '@nestjs/graphql';
-import { AccessTokenPayloadDto } from 'src/auth/dto/common/access-token-payload.dto';
-import { CurrentUser } from 'src/auth/infrastructure/decorators/current-user.decorator';
-import { GqlAuthGuard } from 'src/auth/infrastructure/guards/gql-auth.guard';
+import { AccessTokenPayloadDto } from '../../auth/dto/common/access-token-payload.dto';
+import { CurrentUser } from '../../auth/infrastructure/decorators/current-user.decorator';
+import { GqlAuthGuard } from '../../auth/infrastructure/guards/gql-auth.guard';
 import { User } from '../aggregate/user.aggregate';
 import { UserOutput } from '../dto/common/user.output';
 import { UsersService } from '../users.service';
