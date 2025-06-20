@@ -2,10 +2,11 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
+import { CacheModule } from 'src/config/cache.module';
 import { UsersModule } from 'src/users/users.module';
 import { AuthService } from './auth.service';
-import { AuthResolver } from './resolvers/auth.resolver';
 import { JwtStrategy } from './infrastructure/strategies/jwt.strategy';
+import { AuthResolver } from './resolvers/auth.resolver';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { JwtStrategy } from './infrastructure/strategies/jwt.strategy';
         signOptions: { expiresIn: '15m' },
       }),
     }),
+    CacheModule,
     UsersModule,
   ],
   providers: [AuthResolver, AuthService, JwtStrategy],

@@ -4,10 +4,49 @@ services:
     container_name: bank-application-postgres
     environment:
       POSTGRES_PASSWORD: secretpassword
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
     ports:
       - '5432:5432'
     volumes:
       - postgres-data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  redis:
+    image: redis:7
+    container_name: bank-application-redis
+    ports:
+      - '6379:6379'
+    restart: unless-stopped
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bank-application-app
+    ports:
+      - '3001:3001'
+    environment:
+      ENV: dev
+      PORT: 3001
+      JWT_SECRET: 123456789abcdefg
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USERNAME: postgres
+      DB_PASSWORD: secretpassword
+      DB_NAME: postgres
+      MAIL_HOST: smtp.gmail.com
+      MAIL_PORT: 587
+      MAIL_USER: anfisaprata@gmail.com
+      MAIL_PASS: wptk ylrz ehnl ndsb
+      REDIS_URL: redis://redis:6379
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: npm run start:dev
+    depends_on:
+      - postgres
+      - redis
     restart: unless-stopped
 
 volumes:

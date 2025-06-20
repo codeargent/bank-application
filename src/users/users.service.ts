@@ -61,4 +61,8 @@ export class UsersService {
       access_token: this._jwtService.sign(payload),
     };
   }
+
+  async updateUser(user: User): Promise<User> {
+    return this._usersRepository.save(user);
+  }
 }

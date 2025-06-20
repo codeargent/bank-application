@@ -37,6 +37,10 @@ type AuthTokenDto {
   access_token: String!
 }
 
+type ForgotPasswordOutput {
+  message: String!
+}
+
 type TransactionOutput {
   id: Int!
   accountNumber: String!
@@ -66,6 +70,8 @@ enum TransactionType {
 type Mutation {
   register(email: String!, password: String!): UserOutput!
   login(email: String!, password: String!): AuthTokenDto!
+  forgotPassword(email: String!): ForgotPasswordOutput!
+  resetPassword(email: String!, code: String!, newPassword: String!): ForgotPasswordOutput!
   deposit(amount: Int!): TransactionOutput!
   withdraw(amount: Int!): TransactionOutput!
 }

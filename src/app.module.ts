@@ -1,3 +1,4 @@
+import { MailerModule } from '@nestjs-modules/mailer';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
@@ -7,10 +8,10 @@ import { AccountsModule } from './accounts/accounts.module';
 import { Account } from './accounts/entity/account.entity';
 import { AuthModule } from './auth/auth.module';
 import { validationSchema } from './config/validation';
+import { Transaction } from './transactions/entity/transaction.entity';
+import { TransactionsModule } from './transactions/transactions.module';
 import { User } from './users/aggregate/user.aggregate';
 import { UsersModule } from './users/users.module';
-import { TransactionsModule } from './transactions/transactions.module';
-import { Transaction } from './transactions/entity/transaction.entity';
 
 @Module({
   imports: [
@@ -22,7 +23,6 @@ import { Transaction } from './transactions/entity/transaction.entity';
       driver: ApolloDriver,
       autoSchemaFile: 'src/schema.gql',
       formatError: error => {
-        console.dir(error.extensions?.originalError, { depth: undefined });
         let message = error.message;
 
         if (error.extensions && error.extensions.originalError) {
@@ -51,6 +51,20 @@ import { Transaction } from './transactions/entity/transaction.entity';
       database: process.env.DB_NAME || 'postgres',
       entities: [User, Account, Transaction],
       synchronize: process.env.NODE_ENV !== 'prod',
+    }),
+    MailerModule.forRoot({
+      transport: {
+        host: process.env.MAIL_HOST || 'smtp.gmail.com',
+        port: process.env.MAIL_PORT ? parseInt(process.env.MAIL_PORT) : 587,
+        secure: false,
+        auth: {
+          user: process.env.MAIL_USER,
+          pass: process.env.MAIL_PASS,
+        },
+      },
+      defaults: {
+        from: '"Fake Bank Application" <cocus-fake@bank.com>',
+      },
     }),
     AuthModule,
     UsersModule,
