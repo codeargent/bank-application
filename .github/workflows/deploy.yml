@@ -43,4 +43,4 @@ jobs:
             --allow-unauthenticated \
             --memory=512Mi \
             --port=3001 \
-            --set-env-vars=APP_PORT=3001,SECRET=${{ secrets.JWT_SECRET }},DATABASE_URL=${{ secrets.DATABASE_URL }},REDIS_URL=${{ secrets.REDIS_URL }},MAIL_HOST=${{ secrets.MAIL_HOST }},MAIL_PORT=${{ secrets.MAIL_PORT }},MAIL_USER=${{ secrets.MAIL_USER }},MAIL_PASS="${{ secrets.MAIL_PASS }}"
+            --set-env-vars=JWT_SECRET=${{ secrets.JWT_SECRET }},DB_HOST=${{ secrets.DB_HOST }},DB_PORT=${{ secrets.DB_HOST }},DB_USERNAME=${{ secres.DB_USERNAME }},DB_PASSWORD=${{ secres.DB_PASSWORD }},DB_NAME=${{ secres.DB_NAME }},REDIS_URL=${{ secrets.REDIS_URL }},MAIL_HOST=${{ secrets.MAIL_HOST }},MAIL_PORT=${{ secrets.MAIL_PORT }},MAIL_USER=${{ secrets.MAIL_USER }},MAIL_PASS="${{ secrets.MAIL_PASS }}"
