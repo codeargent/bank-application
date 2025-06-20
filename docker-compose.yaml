@@ -4,8 +4,6 @@ services:
     container_name: bank-application-postgres
     environment:
       POSTGRES_PASSWORD: secretpassword
-      POSTGRES_USER: postgres
-      POSTGRES_DB: postgres
     ports:
       - '5432:5432'
     volumes:
